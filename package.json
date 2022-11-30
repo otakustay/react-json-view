@@ -1,0 +1,59 @@
+{
+  "name": "@otakustay/react-json-view",
+  "version": "0.8.0",
+  "description": "A customizable json view component for react",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "dev": "skr dev --src-dir=site",
+    "lint": "skr lint src site",
+    "lint-staged": "npm run lint -- --staged",
+    "type-check": "tsc --noEmit",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "build-site": "skr build --clean --src-dir=site --build-target=stable",
+    "ci": "yarn install --immutable && npm run lint && npm run type-check && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/otakustay/react-json-view.git"
+  },
+  "keywords": [
+    "react",
+    "json-view",
+    "json-viewer",
+    "react-json"
+  ],
+  "author": "otakustay <otakustay@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/otakustay/react-json-view/issues"
+  },
+  "homepage": "https://github.com/otakustay/react-json-view#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@reskript/cli": "5.7.2",
+    "@reskript/cli-build": "5.7.2",
+    "@reskript/cli-dev": "5.7.2",
+    "@reskript/cli-lint": "5.7.2",
+    "@reskript/config-lint": "5.7.2",
+    "@reskript/settings": "5.7.2",
+    "@types/eslint": "^8",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "antd": "^5.0.2",
+    "core-js": "^3.26.1",
+    "eslint": "^8.28.0",
+    "husky": "^8.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "stylelint": "^14.15.0",
+    "typescript": "^4.9.3",
+    "vite": "^2.9.15"
+  }
+}
