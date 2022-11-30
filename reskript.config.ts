@@ -6,6 +6,9 @@ export default configure(
         build: {
             appTitle: 'JSON View',
             uses: ['emotion'],
+            style: {
+                modules: () => false,
+            },
         },
         devServer: {
             port: 8732,

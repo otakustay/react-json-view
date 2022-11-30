@@ -1,6 +1,7 @@
 import {ChangeEvent, useCallback, useState} from 'react';
 import styled from '@emotion/styled';
-import {JsonView} from '@otakustay/react-json-view';
+import {JsonValue, JsonView} from '@otakustay/react-json-view';
+import '@otakustay/react-json-view/styles/index.css';
 import {Input} from 'antd';
 
 const DEFAULT_JSON = {
@@ -54,7 +55,7 @@ const DEFAULT_JSON = {
 
 interface InputState {
     source: string;
-    parsed: unknown;
+    parsed: JsonValue;
 }
 
 const DEFAULT_STATE: InputState = {
@@ -95,7 +96,12 @@ export default function App() {
         <>
             <Title>JSON View</Title>
             <Layout>
-                <Input.TextArea style={{resize: 'none'}} rows={8} value={input.source} onChange={updateSource} />
+                <Input.TextArea
+                    style={{resize: 'none', fontFamily: 'monospace'}}
+                    rows={8}
+                    value={input.source}
+                    onChange={updateSource}
+                />
                 <JsonView source={input.parsed} />
             </Layout>
         </>

@@ -1,0 +1,54 @@
+.json-view {
+    font-family: monospace;
+}
+
+.json-view-line {
+    display: flex;
+    line-height: 1.5;
+}
+
+.json-view-line:hover {
+    background-color: #fafafa;
+}
+
+.json-view-indent {
+    white-space: pre;
+}
+
+.json-view-name {
+    margin-right: 1ch;
+    color: #6c71c4;
+}
+
+.json-view-name::after {
+    content: ":";
+}
+
+.json-view-value-null {
+    color: #586e75;
+}
+
+.json-view-value-number {
+    color: #268bd2;
+}
+
+.json-view-value-string {
+    color: #cb4b16;
+}
+
+.json-view-value-string::before {
+    content: "\"";
+}
+
+.json-view-value-string::after {
+    content: "\"";
+}
+
+.json-view-value-boolean {
+    color: #2aa198;
+}
+
+.json-view-value-object,
+.json-view-value-array {
+    color: #969696;
+}

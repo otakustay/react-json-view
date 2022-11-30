@@ -1,9 +1,2 @@
-interface Props {
-    source: unknown;
-}
-
-export function JsonView({source}: Props) {
-    return (
-        <pre>{JSON.stringify(source, null, 2)}</pre>
-    );
-}
+export {default as JsonView} from './components/JsonView.js';
+export type {JsonArray, JsonObject, JsonPrimitive, JsonValue} from './utils/type.js';
