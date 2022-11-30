@@ -23,10 +23,12 @@ const Layout = styled.div`
     border-radius: 8px;
 `;
 
+type Configurable = Required<Pick<JsonViewConfig, 'indentSize'>>;
+
 interface Props {
     style?: CSSProperties;
-    value: Required<JsonViewConfig>;
-    onChange: (update: (value: Required<JsonViewConfig>) => Required<JsonViewConfig>) => void;
+    value: Configurable;
+    onChange: (update: (value: Configurable) => Configurable) => void;
 }
 
 export default function Configuration({style, value, onChange}: Props) {

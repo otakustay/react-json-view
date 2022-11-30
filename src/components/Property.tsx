@@ -1,5 +1,7 @@
+import {useMemo, useState} from 'react';
 import {renderByType, JsonValue} from '../utils/type.js';
 import {useConfig} from './ConfigProvider.js';
+import Toggle from './Toggle.js';
 
 interface PropertyTailProps {
     type: string;
@@ -27,10 +29,19 @@ interface Props {
 }
 
 export default function Property({parent, name, value}: Props) {
-    const {indentSize} = useConfig();
-    const path = [...parent, name];
+    const {indentSize, defaultCollapsed, renderCollapsedPlaceholder} = useConfig();
+    const field = useMemo(
+        () => ({path: [...parent, name], name, value}),
+        [name, parent, value]
+    );
+    const [collapsed, setCollapsed] = useState(() => defaultCollapsed(field));
     const renderChildProperty = (name: string, value: JsonValue) => (
-        <Property key={`${path.join('.')}.${name}`} parent={path} name={name} value={value} />
+        <Property
+            key={`${field.path.join('.')}.${name}`}
+            parent={field.path}
+            name={name}
+            value={value}
+        />
     );
     const renderChildProperties = (source: JsonValue) => renderByType(
         source,
@@ -64,6 +75,15 @@ export default function Property({parent, name, value}: Props) {
                         renderByType(
                             value,
                             {
+                                object: () => <Toggle collapsed={collapsed} onChange={setCollapsed} />,
+                                array: () => <Toggle collapsed={collapsed} onChange={setCollapsed} />,
+                            }
+                        )
+                    }
+                    {
+                        renderByType(
+                            value,
+                            {
                                 null: () => 'null',
                                 array: () => '[',
                                 object: () => '{',
@@ -71,17 +91,28 @@ export default function Property({parent, name, value}: Props) {
                             }
                         )
                     }
+                    {
+                        collapsed && renderByType(
+                            value,
+                            {
+                                array: () => <>{renderCollapsedPlaceholder(field)}{']'}</>,
+                                object: () => <>{renderCollapsedPlaceholder(field)}{'}'}</>,
+                            }
+                        )
+                    }
                 </div>
             </div>
-            {renderChildProperties(value)}
             {
-                renderByType(
-                    value,
-                    {
-                        array: () => <PropertyTail type="array" indent={parent.length} content="]" />,
-                        object: () => <PropertyTail type="object" indent={parent.length} content="}" />,
-                    }
-                )
+                !collapsed && [
+                    renderChildProperties(value),
+                    renderByType(
+                        value,
+                        {
+                            array: () => <PropertyTail type="array" indent={parent.length} content="]" />,
+                            object: () => <PropertyTail type="object" indent={parent.length} content="}" />,
+                        }
+                    ),
+                ]
             }
         </>
     );

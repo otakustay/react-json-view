@@ -1,6 +1,6 @@
 import {ChangeEvent, useCallback, useState} from 'react';
 import styled from '@emotion/styled';
-import {JsonValue, JsonView, JsonViewConfig} from '@otakustay/react-json-view';
+import {JsonValue, JsonView, FieldDescription} from '@otakustay/react-json-view';
 import '@otakustay/react-json-view/styles/index.css';
 import {Input} from 'antd';
 import Configuration from '../Configuration/index.js';
@@ -54,6 +54,14 @@ const DEFAULT_JSON = {
     },
 };
 
+const renderCollapsedPlaceholder = ({value}: FieldDescription) => {
+    if (Array.isArray(value)) {
+        return `...(${value.length} items)`;
+    }
+
+    return '...';
+};
+
 interface InputState {
     source: string;
     parsed: JsonValue;
@@ -78,7 +86,7 @@ const Layout = styled.div`
 `;
 
 export default function App() {
-    const [config, setConfig] = useState<Required<JsonViewConfig>>({indentSize: 2});
+    const [config, setConfig] = useState({indentSize: 2});
     const [input, setInput] = useState(DEFAULT_STATE);
     const updateSource = useCallback(
         (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -105,7 +113,11 @@ export default function App() {
                     value={input.source}
                     onChange={updateSource}
                 />
-                <JsonView {...config} source={input.parsed} />
+                <JsonView
+                    {...config}
+                    renderCollapsedPlaceholder={renderCollapsedPlaceholder}
+                    source={input.parsed}
+                />
             </Layout>
         </>
     );

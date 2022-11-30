@@ -1,5 +1,6 @@
 .json-view {
     font-family: monospace;
+    font-size: 1rem;
 }
 
 .json-view-line {
@@ -51,4 +52,12 @@
 .json-view-value-object,
 .json-view-value-array {
     color: #969696;
+}
+
+.json-view-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    vertical-align: middle;
 }
