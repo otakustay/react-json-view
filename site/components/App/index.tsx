@@ -1,8 +1,9 @@
 import {ChangeEvent, useCallback, useState} from 'react';
 import styled from '@emotion/styled';
-import {JsonValue, JsonView} from '@otakustay/react-json-view';
+import {JsonValue, JsonView, JsonViewConfig} from '@otakustay/react-json-view';
 import '@otakustay/react-json-view/styles/index.css';
 import {Input} from 'antd';
+import Configuration from '../Configuration/index.js';
 
 const DEFAULT_JSON = {
     name: '@otakustay/react-json-view',
@@ -77,6 +78,7 @@ const Layout = styled.div`
 `;
 
 export default function App() {
+    const [config, setConfig] = useState<Required<JsonViewConfig>>({indentSize: 2});
     const [input, setInput] = useState(DEFAULT_STATE);
     const updateSource = useCallback(
         (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -95,6 +97,7 @@ export default function App() {
     return (
         <>
             <Title>JSON View</Title>
+            <Configuration style={{marginBottom: 20}} value={config} onChange={setConfig} />
             <Layout>
                 <Input.TextArea
                     style={{resize: 'none', fontFamily: 'monospace'}}
@@ -102,7 +105,7 @@ export default function App() {
                     value={input.source}
                     onChange={updateSource}
                 />
-                <JsonView source={input.parsed} />
+                <JsonView {...config} source={input.parsed} />
             </Layout>
         </>
     );

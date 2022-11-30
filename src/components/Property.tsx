@@ -1,4 +1,5 @@
 import {renderByType, JsonValue} from '../utils/type.js';
+import {useConfig} from './ConfigProvider.js';
 
 interface PropertyTailProps {
     type: string;
@@ -7,11 +8,12 @@ interface PropertyTailProps {
 }
 
 function PropertyTail({type, indent, content}: PropertyTailProps) {
+    const {indentSize} = useConfig();
+
     return (
         <div className="json-view-line">
             <span className="json-view-indent">
-                {/* TODO: Suport `indentSize` prop */}
-                {' '.repeat(indent * 2)}
+                {' '.repeat(indent * indentSize)}
             </span>
             <div className={`json-view-value json-view-value-${type}`}>{content}</div>
         </div>
@@ -25,6 +27,7 @@ interface Props {
 }
 
 export default function Property({parent, name, value}: Props) {
+    const {indentSize} = useConfig();
     const path = [...parent, name];
     const renderChildProperty = (name: string, value: JsonValue) => (
         <Property key={`${path.join('.')}.${name}`} parent={path} name={name} value={value} />
@@ -53,8 +56,7 @@ export default function Property({parent, name, value}: Props) {
         <>
             <div className="json-view-line">
                 <span className="json-view-indent">
-                    {/* TODO: Suport `indentSize` prop */}
-                    {' '.repeat(parent.length * 2)}
+                    {' '.repeat(parent.length * indentSize)}
                 </span>
                 {!!parent.length && <span className="json-view-name">{name}</span>}
                 <div className={`json-view-value json-view-value-${type}`}>
