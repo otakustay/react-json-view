@@ -12,20 +12,20 @@ export type JsonArray = JsonValue[];
 
 export type JsonType = 'null' | 'array' | 'object' | 'string' | 'number' | 'boolean';
 
-interface RenderBranch {
-    null?: (value: null | undefined) => ReactNode;
-    array?: (value: JsonValue[]) => ReactNode;
-    object?: (value: JsonObject) => ReactNode;
-    primitive?: (value: string | number | boolean) => ReactNode;
-    string?: (value: string) => ReactNode;
-    number?: (value: number) => ReactNode;
-    boolean?: (value: boolean) => ReactNode;
-    default?: (value: JsonValue) => ReactNode;
+interface RenderBranch<T> {
+    null?: (value: null | undefined) => T;
+    array?: (value: JsonValue[]) => T;
+    object?: (value: JsonObject) => T;
+    primitive?: (value: string | number | boolean) => T;
+    string?: (value: string) => T;
+    number?: (value: number) => T;
+    boolean?: (value: boolean) => T;
+    default?: (value: JsonValue) => T;
 }
 
 // eslint-disable-next-line complexity
-export const renderByType = (value: JsonValue, branches: RenderBranch): ReactNode => {
-    const renderDefault = branches.default ?? (() => null);
+const checkType = <T>(value: JsonValue, branches: RenderBranch<T>, defaultValue: T): T => {
+    const renderDefault = branches.default ?? (() => defaultValue);
 
     switch (typeof value) {
         case 'string':
@@ -44,3 +44,18 @@ export const renderByType = (value: JsonValue, branches: RenderBranch): ReactNod
             throw new Error(`Unexpected value type ${value} in json`);
     }
 };
+
+export const renderByType = (value: JsonValue, branches: RenderBranch<ReactNode>) => checkType(value, branches, null);
+
+export const checkValueRenderType = (value: JsonValue) => checkType<JsonType>(
+    value,
+    {
+        null: () => 'null',
+        array: () => 'array',
+        object: () => 'object',
+        string: () => 'string',
+        number: () => 'number',
+        boolean: () => 'boolean',
+    },
+    'object'
+);

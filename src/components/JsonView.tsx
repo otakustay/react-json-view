@@ -15,7 +15,7 @@ export default function JsonView({className, style, source, ...config}: Props) {
     return (
         <ConfigProvider {...config}>
             <div className={className ? `json-view ${className}` : 'json-view'} style={style}>
-                <Property parent={ROOT_PARENT} name="" value={source} />
+                <Property root parent={ROOT_PARENT} name="" value={source} />
             </div>
         </ConfigProvider>
     );

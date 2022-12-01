@@ -1,5 +1,5 @@
 import {useMemo, useState} from 'react';
-import {renderByType, JsonValue} from '../utils/type.js';
+import {renderByType, JsonValue, checkValueRenderType} from '../utils/type.js';
 import {useConfig} from './ConfigProvider.js';
 import Toggle from './Toggle.js';
 
@@ -23,12 +23,13 @@ function PropertyTail({type, indent, content}: PropertyTailProps) {
 }
 
 interface Props {
+    root?: boolean;
     parent: string[];
     name: string;
     value: JsonValue;
 }
 
-export default function Property({parent, name, value}: Props) {
+export default function Property({root = false, parent, name, value}: Props) {
     const {
         indentSize,
         quoteOnStringValue,
@@ -37,8 +38,8 @@ export default function Property({parent, name, value}: Props) {
         renderValueContent,
     } = useConfig();
     const field = useMemo(
-        () => ({path: [...parent, name], name, value}),
-        [name, parent, value]
+        () => ({path: root ? parent : [...parent, name], name, value}),
+        [name, parent, root, value]
     );
     const [collapsed, setCollapsed] = useState(() => defaultCollapsed(field));
     const renderChildProperty = (name: string, value: JsonValue) => (
@@ -56,18 +57,6 @@ export default function Property({parent, name, value}: Props) {
             object: value => Object.entries(value).map(([name, value]) => renderChildProperty(name, value)),
         }
     );
-    const type = renderByType(
-        value,
-        {
-            null: () => 'null',
-            array: () => 'array',
-            object: () => 'object',
-            primitive: () => 'primitive',
-            string: () => 'string',
-            number: () => 'number',
-            boolean: () => 'boolean',
-        }
-    );
     const renderValue = () => renderByType(
         value,
         {
@@ -83,7 +72,7 @@ export default function Property({parent, name, value}: Props) {
         <>
             <div className="json-view-line">
                 <span className="json-view-indent">
-                    {' '.repeat(parent.length * indentSize)}
+                    {' '.repeat(field.path.length * indentSize)}
                 </span>
                 {
                     renderByType(
@@ -94,8 +83,8 @@ export default function Property({parent, name, value}: Props) {
                         }
                     )
                 }
-                {!!parent.length && <span className="json-view-name">{name}</span>}
-                <div className={`json-view-value json-view-value-${type}`}>
+                {!!field.path.length && <span className="json-view-name">{name}</span>}
+                <div className={`json-view-value json-view-value-${checkValueRenderType(value)}`}>
                     {renderValueContent({field, renderDefault: renderValue})}
                     {
                         collapsed && renderByType(
@@ -114,8 +103,8 @@ export default function Property({parent, name, value}: Props) {
                     renderByType(
                         value,
                         {
-                            array: () => <PropertyTail type="array" indent={parent.length} content="]" />,
-                            object: () => <PropertyTail type="object" indent={parent.length} content="}" />,
+                            array: () => <PropertyTail type="array" indent={field.path.length} content="]" />,
+                            object: () => <PropertyTail type="object" indent={field.path.length} content="}" />,
                         }
                     ),
                 ]
