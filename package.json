@@ -1,6 +1,6 @@
 {
   "name": "@otakustay/react-json-view",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "A customizable json view component for react",
   "type": "module",
   "main": "./dist/index.js",

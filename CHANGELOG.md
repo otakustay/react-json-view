@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.4](https://github.com/otakustay/react-json-view/compare/v0.8.3...v0.8.4) (2022-12-01)
+
+
+### Bug Fixes
+
+* incorrect path passed to render props ([a87cbf2](https://github.com/otakustay/react-json-view/commit/a87cbf23eb4fd9e93f91ebb5a05ecaeef5850ea8))
+
 ### [0.8.3](https://github.com/otakustay/react-json-view/compare/v0.8.2...v0.8.3) (2022-12-01)
 
 
