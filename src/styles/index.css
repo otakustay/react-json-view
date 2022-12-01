@@ -60,4 +60,13 @@
     justify-content: center;
     cursor: pointer;
     vertical-align: middle;
+    color: #969696;
+}
+
+.json-view-secondary {
+    margin-left: .5em;
+}
+
+.json-view-secondary-text {
+    color: #ccc;
 }

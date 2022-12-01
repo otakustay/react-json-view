@@ -29,7 +29,7 @@ interface Props {
 }
 
 export default function Property({parent, name, value}: Props) {
-    const {indentSize, defaultCollapsed, renderCollapsedPlaceholder} = useConfig();
+    const {indentSize, defaultCollapsed, renderCollapsedPlaceholder, renderValueContent} = useConfig();
     const field = useMemo(
         () => ({path: [...parent, name], name, value}),
         [name, parent, value]
@@ -62,6 +62,15 @@ export default function Property({parent, name, value}: Props) {
             boolean: () => 'boolean',
         }
     );
+    const renderValue = () => renderByType(
+        value,
+        {
+            null: () => 'null',
+            array: () => '[',
+            object: () => '{',
+            primitive: value => value.toString(),
+        }
+    );
 
     return (
         <>
@@ -69,28 +78,18 @@ export default function Property({parent, name, value}: Props) {
                 <span className="json-view-indent">
                     {' '.repeat(parent.length * indentSize)}
                 </span>
+                {
+                    renderByType(
+                        value,
+                        {
+                            object: () => <Toggle collapsed={collapsed} onChange={setCollapsed} />,
+                            array: () => <Toggle collapsed={collapsed} onChange={setCollapsed} />,
+                        }
+                    )
+                }
                 {!!parent.length && <span className="json-view-name">{name}</span>}
                 <div className={`json-view-value json-view-value-${type}`}>
-                    {
-                        renderByType(
-                            value,
-                            {
-                                object: () => <Toggle collapsed={collapsed} onChange={setCollapsed} />,
-                                array: () => <Toggle collapsed={collapsed} onChange={setCollapsed} />,
-                            }
-                        )
-                    }
-                    {
-                        renderByType(
-                            value,
-                            {
-                                null: () => 'null',
-                                array: () => '[',
-                                object: () => '{',
-                                primitive: value => value.toString(),
-                            }
-                        )
-                    }
+                    {renderValueContent({field, renderDefault: renderValue})}
                     {
                         collapsed && renderByType(
                             value,

@@ -1,57 +1,49 @@
 import {ChangeEvent, useCallback, useState} from 'react';
 import styled from '@emotion/styled';
-import {JsonValue, JsonView, FieldDescription} from '@otakustay/react-json-view';
+import {JsonValue, JsonView, FieldDescription, RenderContext} from '@otakustay/react-json-view';
 import '@otakustay/react-json-view/styles/index.css';
 import {Input} from 'antd';
 import Configuration from '../Configuration/index.js';
+import '../../styles/index.js';
 
 const DEFAULT_JSON = {
-    name: '@otakustay/react-json-view',
-    version: '0.8.0',
-    description: 'A customizable json view component for react',
-    type: 'module',
-    exports: {
-        '.': './dist/index.js',
+    level: 20,
+    time: 1669746715936,
+    hostname: 'venue-proxy-68bdd96ffc-f8hgh',
+    action: 'httpRequestStart',
+    type: 'user',
+    traceId: '661129ba-675c-4ea8-8177-18e5fdddfd34',
+    uid: '661129ba-675c-4ea8-8177-18e5fdddfd34',
+    host: 'example.com',
+    clientIp: '127.0.0.1',
+    url: 'https://example.com/api/users/123',
+    method: 'GET',
+    requestHeaders: {
+        host: 'example.com',
+        'transfer-encoding': 'chunked',
+        'content-type': 'application/x-www-form-urlencoded',
+        'x-forwarded-for': '127.0.0.1',
     },
-    scripts: {
-        prepare: 'husky install',
-        dev: 'skr dev --src-dir=site',
-        lint: 'skr lint src site',
-        'lint-staged': 'npm run lint -- --staged',
-        'type-check': 'tsc --noEmit',
-        build: 'tsc -p tsconfig.build.json',
-        ci: 'yarn install --immutable && npm run lint && npm run type-check && npm run build',
-    },
-    repository: {
-        type: 'git',
-        url: 'git+https://github.com/otakustay/react-json-view.git',
-    },
-    keywords: ['react', 'json-view', 'json-viewer', 'react-json'],
-    author: 'otakustay <otakustay@gmail.com>',
-    license: 'MIT',
-    bugs: {
-        url: 'https://github.com/otakustay/react-json-view/issues',
-    },
-    homepage: 'https://github.com/otakustay/react-json-view#readme',
-    devDependencies: {
-        '@reskript/cli': '5.7.2',
-        '@reskript/cli-dev': '5.7.2',
-        '@reskript/cli-lint': '5.7.2',
-        '@reskript/config-lint': '5.7.2',
-        '@reskript/settings': '5.7.2',
-        '@types/eslint': '^8',
-        '@types/react': '^18',
-        '@types/react-dom': '^18',
-        antd: '^5.0.2',
-        'core-js': '^3.26.1',
-        eslint: '^8.28.0',
-        husky: '^8.0.2',
-        react: '^18.2.0',
-        'react-dom': '^18.2.0',
-        stylelint: '^14.15.0',
-        typescript: '^4.9.3',
-        vite: '^2.9.15',
-    },
+    pathname: '/api/users/123',
+    search: '',
+};
+
+const renderValueContent = ({field, renderDefault}: RenderContext) => {
+    const content = renderDefault();
+    if (typeof field.value === 'string' && /^https?:\/\//.test(field.value)) {
+        return <a target="_blank" rel="noopener noreferrer" href={field.value}>{content}</a>;
+    }
+    if (typeof field.value === 'number' && (field.name === 'time' || field.name.endsWith('Time'))) {
+        return (
+            <>
+                {content}
+                <span className="json-view-secondary json-view-secondary-text">
+                    {new Date(field.value).toLocaleString()}
+                </span>
+            </>
+        );
+    }
+    return content;
 };
 
 const renderCollapsedPlaceholder = ({value}: FieldDescription) => {
@@ -116,6 +108,7 @@ export default function App() {
                 <JsonView
                     {...config}
                     renderCollapsedPlaceholder={renderCollapsedPlaceholder}
+                    renderValueContent={renderValueContent}
                     source={input.parsed}
                 />
             </Layout>
