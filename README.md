@@ -9,3 +9,26 @@ A customizable json view component for react, included features:
 5. CSS theme support.
 
 We don't plan to support editing feature recently.
+
+## Install
+
+```shell
+npm install @otakustay/react-json-view
+```
+
+## Usage
+
+### Basic
+
+To render an obejct containing JSON values, simply pass `source` prop to `JsonView` component.
+
+```tsx
+import {JsonView} from '@otakustay/react-json-view';
+import '@otakustay/react-json-view/styles/index.css';
+
+function App() {
+    return (
+        <JsonView source={mySourceObject} />
+    );
+}
+```

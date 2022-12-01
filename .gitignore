@@ -115,3 +115,7 @@ dist
 
 #Mac
 .DS_Store
+
+# Output
+/dist
+/styles

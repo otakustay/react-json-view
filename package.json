@@ -9,15 +9,22 @@
   "sideEffects": [
     "*.css"
   ],
+  "files": [
+    "dist",
+    "styles"
+  ],
   "scripts": {
     "prepare": "husky install",
+    "prepublishOnly": "npm run build",
     "dev": "skr dev --src-dir=site",
     "lint": "skr lint src site",
     "lint-staged": "npm run lint -- --staged",
     "type-check": "tsc --noEmit",
-    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "build": "rm -rf dist styles && tsc -p tsconfig.build.json && cp -r src/styles styles",
     "build-site": "skr build --clean --src-dir=site --build-target=stable",
-    "ci": "yarn install --immutable && npm run lint && npm run type-check && npm run build"
+    "ci": "yarn install --immutable && npm run lint && npm run type-check && npm run build",
+    "release": "npm run ci && standard-version",
+    "deploy": "npm publish --access public"
   },
   "repository": {
     "type": "git",
@@ -55,6 +62,7 @@
     "husky": "^8.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "standard-version": "^9.5.0",
     "stylelint": "^14.15.0",
     "typescript": "^4.9.3",
     "vite": "^2.9.15"
