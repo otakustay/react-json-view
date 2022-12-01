@@ -3,6 +3,7 @@
   "version": "0.8.0",
   "description": "A customizable json view component for react",
   "type": "module",
+  "main": "./dist/index.js",
   "exports": {
     ".": "./dist/index.js"
   },
