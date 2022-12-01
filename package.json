@@ -6,7 +6,7 @@
   "main": "./dist/index.js",
   "exports": {
     ".": "./dist/index.js",
-    "./style": "./styles/index.css"
+    "./style": "./dist/styles/index.css"
   },
   "sideEffects": [
     "*.css"
