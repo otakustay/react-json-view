@@ -5,7 +5,8 @@
   "type": "module",
   "main": "./dist/index.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./style": "./styles/index.css"
   },
   "sideEffects": [
     "*.css"
@@ -21,7 +22,7 @@
     "lint": "skr lint src site",
     "lint-staged": "npm run lint -- --staged",
     "type-check": "tsc --noEmit",
-    "build": "rm -rf dist styles && tsc -p tsconfig.build.json && cp -r src/styles styles",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp -r src/styles dist",
     "build-site": "skr build --clean --src-dir=site --build-target=stable",
     "ci": "yarn install --immutable && npm run lint && npm run type-check && npm run build",
     "release": "npm run ci && standard-version",

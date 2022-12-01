@@ -24,7 +24,7 @@ To render an obejct containing JSON values, simply pass `source` prop to `JsonVi
 
 ```tsx
 import {JsonView} from '@otakustay/react-json-view';
-import '@otakustay/react-json-view/styles/index.css';
+import '@otakustay/react-json-view/style';
 
 function App() {
     return (

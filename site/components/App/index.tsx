@@ -1,6 +1,7 @@
 import {ChangeEvent, useCallback, useState} from 'react';
 import styled from '@emotion/styled';
 import {JsonValue, JsonView, FieldDescription, RenderContext, Secondary, ActionBar} from '@otakustay/react-json-view';
+// For users this should be `@otakustay/react-json-view/style`;
 import '@otakustay/react-json-view/styles/index.css';
 import {Input, Typography} from 'antd';
 import Configuration from '../Configuration/index.js';
