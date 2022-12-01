@@ -3,10 +3,13 @@ import {ReactNode} from 'react';
 
 // @ts-expect-error https://github.com/emotion-js/emotion/pull/2819
 const Layout = styled.label`
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-rows: 20px 1fr;
+    align-items: center;
     gap: 4px;
     width: 120px;
+    height: 100px;
     padding: 20px;
     font-size: .8rem;
 `;

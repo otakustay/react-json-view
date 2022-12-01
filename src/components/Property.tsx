@@ -29,7 +29,13 @@ interface Props {
 }
 
 export default function Property({parent, name, value}: Props) {
-    const {indentSize, defaultCollapsed, renderCollapsedPlaceholder, renderValueContent} = useConfig();
+    const {
+        indentSize,
+        quoteOnStringValue,
+        defaultCollapsed,
+        renderCollapsedPlaceholder,
+        renderValueContent,
+    } = useConfig();
     const field = useMemo(
         () => ({path: [...parent, name], name, value}),
         [name, parent, value]
@@ -68,6 +74,7 @@ export default function Property({parent, name, value}: Props) {
             null: () => 'null',
             array: () => '[',
             object: () => '{',
+            string: value => (quoteOnStringValue ? `"${value}"` : value),
             primitive: value => value.toString(),
         }
     );

@@ -1,5 +1,5 @@
 import {CSSProperties} from 'react';
-import {Select} from 'antd';
+import {Checkbox, Select} from 'antd';
 import {JsonViewConfig} from '@otakustay/react-json-view';
 import styled from '@emotion/styled';
 import Item from './Item.js';
@@ -23,7 +23,7 @@ const Layout = styled.div`
     border-radius: 8px;
 `;
 
-type Configurable = Required<Pick<JsonViewConfig, 'indentSize'>>;
+type Configurable = Required<Pick<JsonViewConfig, 'indentSize' | 'quoteOnStringValue'>>;
 
 interface Props {
     style?: CSSProperties;
@@ -41,6 +41,14 @@ export default function Configuration({style, value, onChange}: Props) {
                         value={value.indentSize}
                         onChange={indentSize => onChange(v => ({...v, indentSize}))}
                     />
+                </Item>
+                <Item label="String Quote">
+                    <Checkbox
+                        checked={value.quoteOnStringValue}
+                        onChange={e => onChange(v => ({...v, quoteOnStringValue: e.target.checked}))}
+                    >
+                        Quote
+                    </Checkbox>
                 </Item>
             </Row>
         </Layout>

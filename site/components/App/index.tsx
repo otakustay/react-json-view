@@ -97,7 +97,7 @@ const Layout = styled.div`
 `;
 
 export default function App() {
-    const [config, setConfig] = useState({indentSize: 2});
+    const [config, setConfig] = useState({indentSize: 2, quoteOnStringValue: true});
     const [input, setInput] = useState(DEFAULT_STATE);
     const updateSource = useCallback(
         (e: ChangeEvent<HTMLTextAreaElement>) => {
