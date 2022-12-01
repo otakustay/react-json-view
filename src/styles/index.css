@@ -37,14 +37,6 @@
     color: #cb4b16;
 }
 
-.json-view-value-string::before {
-    content: "\"";
-}
-
-.json-view-value-string::after {
-    content: "\"";
-}
-
 .json-view-value-boolean {
     color: #2aa198;
 }
@@ -65,8 +57,21 @@
 
 .json-view-secondary {
     margin-left: .5em;
+    color: #ccc;
 }
 
-.json-view-secondary-text {
-    color: #ccc;
+.json-view-action-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: .25em;
+    margin-left: .5em;
+}
+
+.json-view-action {
+    color: #333;
+    cursor: pointer;
+}
+
+.json-view-action:hover {
+    color: #268bd2;
 }

@@ -6,6 +6,9 @@
   "exports": {
     ".": "./dist/index.js"
   },
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "prepare": "husky install",
     "dev": "skr dev --src-dir=site",

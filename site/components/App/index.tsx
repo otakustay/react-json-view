@@ -1,8 +1,8 @@
 import {ChangeEvent, useCallback, useState} from 'react';
 import styled from '@emotion/styled';
-import {JsonValue, JsonView, FieldDescription, RenderContext} from '@otakustay/react-json-view';
+import {JsonValue, JsonView, FieldDescription, RenderContext, Secondary, ActionBar} from '@otakustay/react-json-view';
 import '@otakustay/react-json-view/styles/index.css';
-import {Input} from 'antd';
+import {Input, Typography} from 'antd';
 import Configuration from '../Configuration/index.js';
 import '../../styles/index.js';
 
@@ -30,20 +30,38 @@ const DEFAULT_JSON = {
 
 const renderValueContent = ({field, renderDefault}: RenderContext) => {
     const content = renderDefault();
+    const actionBar = (
+        <ActionBar>
+            <ActionBar.Action>
+                <Typography.Text copyable={{text: `${field.value}`}} />
+            </ActionBar.Action>
+        </ActionBar>
+    );
     if (typeof field.value === 'string' && /^https?:\/\//.test(field.value)) {
-        return <a target="_blank" rel="noopener noreferrer" href={field.value}>{content}</a>;
+        return (
+            <a target="_blank" rel="noopener noreferrer" href={field.value}>
+                {content}
+                {actionBar}
+            </a>
+        );
     }
     if (typeof field.value === 'number' && (field.name === 'time' || field.name.endsWith('Time'))) {
         return (
             <>
                 {content}
-                <span className="json-view-secondary json-view-secondary-text">
+                <Secondary>
                     {new Date(field.value).toLocaleString()}
-                </span>
+                    {actionBar}
+                </Secondary>
             </>
         );
     }
-    return content;
+    return (
+        <>
+            {content}
+            {actionBar}
+        </>
+    );
 };
 
 const renderCollapsedPlaceholder = ({value}: FieldDescription) => {
