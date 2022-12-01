@@ -1,4 +1,4 @@
-import {useMemo, useState} from 'react';
+import {memo, useMemo, useState} from 'react';
 import {renderByType, JsonValue, checkValueRenderType} from '../utils/type.js';
 import {useConfig} from './ConfigProvider.js';
 import Toggle from './Toggle.js';
@@ -29,7 +29,7 @@ interface Props {
     value: JsonValue;
 }
 
-export default function Property({root = false, parent, name, value}: Props) {
+function Property({root = false, parent, name, value}: Props) {
     const {
         indentSize,
         quoteOnStringValue,
@@ -112,3 +112,5 @@ export default function Property({root = false, parent, name, value}: Props) {
         </>
     );
 }
+
+export default memo(Property);
