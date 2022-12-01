@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.3](https://github.com/otakustay/react-json-view/compare/v0.8.2...v0.8.3) (2022-12-01)
+
+
+### Features
+
+* add a config to allow customize quote on string values ([9b709e4](https://github.com/otakustay/react-json-view/commit/9b709e4c1fbc1219187c00702b7086148bb8d226))
+
+
+### Bug Fixes
+
+* incorrect style export path ([5f5b8ba](https://github.com/otakustay/react-json-view/commit/5f5b8baa228f002bb4938d0bf1bf0863b99a5bae))
+
 ### [0.8.2](https://github.com/otakustay/react-json-view/compare/v0.8.1...v0.8.2) (2022-12-01)
 
 
